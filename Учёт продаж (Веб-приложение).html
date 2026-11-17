@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#059669">
+    <title>Учёт продаж</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #1e293b;
+            padding-bottom: 44px;
+        }
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            padding: 12px 16px;
+        }
+        .header-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #059669;
+            color: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .logo-sub {
+            font-size: 11px;
+            color: #64748b;
+            margin: 0;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-tool {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 11px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-tool.excel {
+            background: #ecfdf5;
+            border-color: #a7f3d0;
+            color: #047857;
+        }
+        main {
+            max-width: 720px;
+            margin: 16px auto 0;
+            padding: 0 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 14px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dot-green {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            display: inline-block;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 500px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .field-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        input[type="date"],
+        input[type="number"],
+        input[type="text"],
+        input[type="month"] {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #f8fafc;
+            font-size: 16px;
+            color: #0f172a;
+            outline: none;
+            font-family: inherit;
+        }
+        input:focus {
+            border-color: #059669;
+            background: #ffffff;
+        }
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 480px) {
+            .platforms-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        .platform-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 6px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: #f8fafc;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .platform-btn.active {
+            border-color: #059669;
+            background: #ecfdf5;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.18);
+            transform: scale(1.03);
+        }
+        .flags-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+            margin-bottom: 14px;
+        }
+        @media (max-width: 460px) {
+            .flags-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .flag-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .fairy-box {
+            background: #fdf2f8;
+            border: 1px solid #fbcfe8;
+        }
+        .review-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+        }
+        .flag-box input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .fairy-box input[type="checkbox"] {
+            accent-color: #db2777;
+        }
+        .review-box input[type="checkbox"] {
+            accent-color: #d97706;
+        }
+        .flag-text {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .fairy-text {
+            color: #9d174d;
+        }
+        .review-text {
+            color: #92400e;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #059669;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
+        }
+        .btn-submit:active {
+            background: #047857;
+        }
+
+        /* Сезонная карточка итогов за месяц */
+        .month-summary-card {
+            position: relative;
+            overflow: hidden;
+            transition: background 0.35s ease, border-color 0.35s ease;
+        }
+        .season-art {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 145px;
+            height: 145px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .month-summary-content {
+            position: relative;
+            z-index: 1;
+        }
+        .summary-table-wrap {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 12px;
+            padding: 2px 6px;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .month-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-nav {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(203, 213, 225, 0.9);
+            background: rgba(255, 255, 255, 0.9);
+            color: #334155;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        .col-plat {
+            width: 22%;
+        }
+        .col-cnt {
+            width: 34%;
+        }
+        .col-sum {
+            width: 44%;
+        }
+        th {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #64748b;
+            padding: 8px 4px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        th.num, td.num {
+            text-align: right;
+            white-space: nowrap;
+        }
+        td {
+            padding: 9px 4px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        .row-total td {
+            background: #ecfdf5;
+            color: #064e3b;
+            font-weight: 800;
+            font-size: 15px;
+            border-top: 2px solid #a7f3d0;
+            border-bottom: 1px solid #a7f3d0;
+        }
+        .row-fairy td {
+            background: #fdf2f8;
+            color: #831843;
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: 1px solid #fbcfe8;
+        }
+        .row-review td {
+            background: #fffbeb;
+            color: #78350f;
+            font-weight: 700;
+            font-size: 14px;
+            border-bottom: none;
+        }
+        .row-year-total td {
+            background: #eff6ff;
+            color: #1e3a8a;
+            font-weight: 800;
+            font-size: 15px;
+            border-top: 2px solid #bfdbfe;
+            border-bottom: 1px solid #bfdbfe;
+        }
+        .total-label {
+            line-height: 1.25;
+            font-size: 13px;
+        }
+        .year-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 999px;
+        }
+        .sale-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .sale-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .sale-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+        .sale-info {
+            min-width: 0;
+        }
+        .sale-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0f172a;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .sale-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-top: 4px;
+            font-size: 12px;
+            color: #64748b;
+        }
+        .badge-fairy {
+            background: #fce7f3;
+            color: #be185d;
+            border: 1px solid #fbcfe8;
+            padding: 1px 7px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .badge-review {
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+            padding: 1px 7px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .badge-review-off {
+            background: #f8fafc;
+            color: #94a3b8;
+            border: 1px dashed #cbd5e1;
+            padding: 1px 7px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .sale-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .sale-amount {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f172a;
+            white-space: nowrap;
+        }
+        .btn-del {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 18px;
+            padding: 4px 6px;
+            cursor: pointer;
+        }
+        .btn-del:hover {
+            color: #ef4444;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 24px 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* Модальное окно подтверждения удаления */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 60;
+        }
+        .modal-backdrop.open {
+            display: flex;
+        }
+        .modal-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        .modal-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+        .modal-text {
+            font-size: 13px;
+            color: #475569;
+            margin: 0 0 16px 0;
+            line-height: 1.4;
+        }
+        .modal-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .btn-modal-cancel {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #334155;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-modal-confirm {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background: #ef4444;
+            color: #ffffff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0f172a;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo-block">
+            <div class="logo-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+            </div>
+            <div>
+                <h1 class="logo-title">Учёт продаж</h1>
+                <p class="logo-sub">Автосохранение на устройстве</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <button type="button" class="btn-tool excel" onclick="exportCSV()">📥 Excel</button>
+            <button type="button" class="btn-tool" onclick="exportJSON()">⬇️ Копия</button>
+            <label class="btn-tool" style="margin:0;">
+                ⬆️ Импорт
+                <input type="file" accept=".json" style="display:none;" onchange="importJSON(event)">
+            </label>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Форма добавления продажи -->
+    <section class="card">
+        <h2 class="card-title"><span class="dot-green"></span> Новая продажа</h2>
+        <form id="saleForm" onsubmit="addSale(event)">
+            <div class="form-grid">
+                <div>
+                    <label class="field-label" for="saleDate">Дата продажи</label>
+                    <input type="date" id="saleDate" required>
+                </div>
+                <div>
+                    <label class="field-label" for="saleAmount">Сумма продажи (₽)</label>
+                    <input type="number" id="saleAmount" step="0.01" min="0" inputmode="decimal" placeholder="0" required>
+                </div>
+            </div>
+
+            <label class="field-label">Площадка</label>
+            <div class="platforms-grid" id="platformButtons">
+                <!-- Авито 1 -->
+                <button type="button" class="platform-btn active" data-platform="Авито 1" onclick="selectPlatform('Авито 1')" aria-label="Авито 1">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="11" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <circle cx="15" cy="14" r="4.5" fill="#00AAFF"/>
+                        <circle cx="24.5" cy="12" r="3" fill="#00E065"/>
+                        <circle cx="13.5" cy="24" r="3.2" fill="#9747FF"/>
+                        <circle cx="23.5" cy="23.5" r="5.2" fill="#FF4053"/>
+                        <circle cx="31.5" cy="31.5" r="7" fill="#0f172a"/>
+                        <text x="31.5" y="34.8" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="sans-serif">1</text>
+                    </svg>
+                </button>
+
+                <!-- Авито 2 -->
+                <button type="button" class="platform-btn" data-platform="Авито 2" onclick="selectPlatform('Авито 2')" aria-label="Авито 2">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="11" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <circle cx="15" cy="14" r="4.5" fill="#00AAFF"/>
+                        <circle cx="24.5" cy="12" r="3" fill="#00E065"/>
+                        <circle cx="13.5" cy="24" r="3.2" fill="#9747FF"/>
+                        <circle cx="23.5" cy="23.5" r="5.2" fill="#FF4053"/>
+                        <circle cx="31.5" cy="31.5" r="7" fill="#059669"/>
+                        <text x="31.5" y="34.8" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="sans-serif">2</text>
+                    </svg>
+                </button>
+
+                <!-- WB -->
+                <button type="button" class="platform-btn" data-platform="WB" onclick="selectPlatform('WB')" aria-label="WB">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <defs>
+                            <linearGradient id="wbGradMain" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#CB11AB"/>
+                                <stop offset="100%" stop-color="#481173"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="11" fill="url(#wbGradMain)"/>
+                        <text x="20" y="25.5" text-anchor="middle" fill="#ffffff" font-size="15.5" font-weight="900" font-family="sans-serif" letter-spacing="-0.5">WB</text>
+                    </svg>
+                </button>
+
+                <!-- Вацап -->
+                <button type="button" class="platform-btn" data-platform="Вацап" onclick="selectPlatform('Вацап')" aria-label="Вацап">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="11" fill="#25D366"/>
+                        <path d="M20 9.5c-5.8 0-10.5 4.7-10.5 10.5 0 1.9.5 3.7 1.4 5.3L9.5 30.5l5.4-1.4c1.5.8 3.3 1.3 5.1 1.3 5.8 0 10.5-4.7 10.5-10.5S25.8 9.5 20 9.5z" fill="#ffffff"/>
+                        <path d="M25.4 23.2c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.7.3-.2.2-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.7 4.3 3.8.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z" fill="#25D366"/>
+                    </svg>
+                </button>
+
+                <!-- Телеграм -->
+                <button type="button" class="platform-btn" data-platform="Телеграм" onclick="selectPlatform('Телеграм')" aria-label="Телеграм">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="11" fill="#2AABEE"/>
+                        <path d="M28.5 12.2L10.3 19.2c-1.2.5-1.2 1.2-.2 1.5l4.7 1.5 10.8-6.8c.5-.3 1-.1.6.2l-8.8 7.9-.3 4.8c.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.4z" fill="#ffffff"/>
+                    </svg>
+                </button>
+
+                <!-- Мах -->
+                <button type="button" class="platform-btn" data-platform="Мах" onclick="selectPlatform('Мах')" aria-label="Мах">
+                    <svg width="42" height="42" viewBox="0 0 40 40">
+                        <defs>
+                            <linearGradient id="maxGradMain" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#3B82F6"/>
+                                <stop offset="100%" stop-color="#7C3AED"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="40" height="40" rx="11" fill="url(#maxGradMain)"/>
+                        <path d="M20 9.5c-5.8 0-10.5 4.4-10.5 9.8 0 2.5 1 4.8 2.7 6.5-.2 1.6-.9 3.3-.9 3.3s2.1-.3 3.9-1.2c1.5.6 3.1.9 4.8.9 5.8 0 10.5-4.4 10.5-9.8S25.8 9.5 20 9.5z" fill="#ffffff" fill-opacity="0.22"/>
+                        <text x="20" y="24" text-anchor="middle" fill="#ffffff" font-size="13.5" font-weight="900" font-family="sans-serif">M</text>
+                    </svg>
+                </button>
+            </div>
+
+            <div>
+                <label class="field-label" for="saleProduct">Название товара</label>
+                <input type="text" id="saleProduct" placeholder="Например: Сумка кожаная" required>
+            </div>
+
+            <div class="flags-grid">
+                <label class="flag-box fairy-box">
+                    <input type="checkbox" id="saleFairy">
+                    <span class="flag-text fairy-text">🧚 От феи</span>
+                </label>
+
+                <label class="flag-box review-box">
+                    <input type="checkbox" id="saleReview">
+                    <span class="flag-text review-text">⭐ Есть отзыв</span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-submit">+ Добавить продажу</button>
+        </form>
+    </section>
+
+    <!-- Итоги за месяц с индивидуальным сезонным оформлением -->
+    <section class="card month-summary-card" id="monthSummaryCard">
+        <div class="season-art" id="seasonArt"></div>
+        <div class="month-summary-content">
+            <div class="month-header">
+                <h2 class="card-title" style="margin:0;" id="monthCardTitle">Итоги за месяц</h2>
+                <div class="month-nav">
+                    <button type="button" class="btn-nav" onclick="changeMonth(-1)">&lt;</button>
+                    <input type="month" id="monthPicker" onchange="renderAll()" style="width:auto; padding:7px 10px; font-size:14px; font-weight:600; background:rgba(255,255,255,0.92);">
+                    <button type="button" class="btn-nav" onclick="changeMonth(1)">&gt;</button>
+                </div>
+            </div>
+
+            <div class="summary-table-wrap">
+                <table>
+                    <colgroup>
+                        <col class="col-plat">
+                        <col class="col-cnt">
+                        <col class="col-sum">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Площадка</th>
+                            <th class="num">Заказы</th>
+                            <th class="num">Сумма</th>
+                        </tr>
+                    </thead>
+                    <tbody id="summaryBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Итоги за год -->
+    <section class="card">
+        <div class="month-header">
+            <h2 class="card-title" style="margin:0;">📊 Итоги за год</h2>
+            <span class="year-badge" id="yearBadge">2026 год</span>
+        </div>
+
+        <table>
+            <colgroup>
+                <col class="col-plat">
+                <col class="col-cnt">
+                <col class="col-sum">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Показатель</th>
+                    <th class="num">Заказы</th>
+                    <th class="num">Сумма</th>
+                </tr>
+            </thead>
+            <tbody id="yearSummaryBody"></tbody>
+        </table>
+    </section>
+
+    <!-- Список продаж за месяц -->
+    <section class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 class="card-title" style="margin:0;">Продажи за месяц</h2>
+            <span id="salesCountBadge" style="font-size:12px; color:#64748b; font-weight:600;"></span>
+        </div>
+        <div id="salesList"></div>
+    </section>
+</main>
+
+<!-- Окно подтверждения удаления записи -->
+<div class="modal-backdrop" id="deleteModal">
+    <div class="modal-card">
+        <h3 class="modal-title">Удалить запись?</h3>
+        <p class="modal-text" id="deleteModalText">Вы уверены, что хотите удалить эту продажу?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn-modal-cancel" onclick="closeDeleteModal()">Отмена</button>
+            <button type="button" class="btn-modal-confirm" onclick="confirmDeleteSale()">Удалить</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    var STORAGE_KEY = 'sales_tracker_data_v3';
+    var PLATFORMS = ['Авито 1', 'Авито 2', 'WB', 'Вацап', 'Телеграм', 'Мах'];
+    var selectedPlatform = 'Авито 1';
+    var pendingDeleteId = null;
+
+    var MONTH_THEMES = {
+        '01': {
+            icon: '❄️',
+            bg: 'linear-gradient(135deg, #e0f2fe 0%, #dbeafe 55%, #e0e7ff 100%)',
+            border: '#93c5fd',
+            titleColor: '#1e3a8a',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><g stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" opacity="0.22"><line x1="95" y1="12" x2="95" y2="72"/><line x1="65" y1="42" x2="125" y2="42"/><line x1="74" y1="21" x2="116" y2="63"/><line x1="116" y1="21" x2="74" y2="63"/><polyline points="88,19 95,26 102,19"/><polyline points="88,65 95,58 102,65"/><polyline points="72,35 79,42 72,49"/><polyline points="118,35 111,42 118,49"/></g><g stroke="#4f46e5" stroke-width="1.8" stroke-linecap="round" opacity="0.18"><line x1="45" y1="15" x2="45" y2="45"/><line x1="30" y1="30" x2="60" y2="30"/><line x1="34" y1="19" x2="56" y2="41"/><line x1="56" y1="19" x2="34" y2="41"/></g><circle cx="115" cy="95" r="4" fill="#3b82f6" opacity="0.18"/><circle cx="70" cy="85" r="3" fill="#6366f1" opacity="0.18"/></svg>'
+        },
+        '02': {
+            icon: '🌨️',
+            bg: 'linear-gradient(135deg, #f1f5f9 0%, #e0e7ff 55%, #f3e8ff 100%)',
+            border: '#c7d2fe',
+            titleColor: '#3730a3',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M25 32 Q65 18 105 34 T138 28" stroke="#6366f1" stroke-width="3" stroke-linecap="round" opacity="0.2"/><path d="M35 52 Q75 40 115 54 T140 48" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" opacity="0.18"/><circle cx="88" cy="24" r="3.5" fill="#6366f1" opacity="0.22"/><circle cx="118" cy="40" r="4.5" fill="#8b5cf6" opacity="0.2"/><circle cx="62" cy="42" r="3" fill="#6366f1" opacity="0.2"/><circle cx="102" cy="70" r="4" fill="#a855f7" opacity="0.18"/><circle cx="126" cy="82" r="3" fill="#6366f1" opacity="0.18"/></svg>'
+        },
+        '03': {
+            icon: '🌱',
+            bg: 'linear-gradient(135deg, #ecfeff 0%, #e0f2fe 50%, #ecfdf5 100%)',
+            border: '#7dd3fc',
+            titleColor: '#0369a1',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M88 95 C88 68 95 52 108 42" stroke="#059669" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/><path d="M88 76 C74 68 68 58 72 48 C82 52 88 62 88 76 Z" fill="#10b981" opacity="0.22"/><path d="M108 42 C116 48 118 58 112 65 C106 60 105 50 108 42 Z" fill="#0284c7" opacity="0.25"/><path d="M108 42 C100 48 98 58 104 65 C110 60 111 50 108 42 Z" fill="#38bdf8" opacity="0.28"/><circle cx="55" cy="30" r="4" fill="#38bdf8" opacity="0.2"/></svg>'
+        },
+        '04': {
+            icon: '🌿',
+            bg: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 55%, #fef9c3 100%)',
+            border: '#6ee7b7',
+            titleColor: '#065f46',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M65 88 C82 65 104 42 128 24" stroke="#059669" stroke-width="2.5" stroke-linecap="round" opacity="0.25"/><path d="M84 66 C74 52 78 38 92 36 C94 50 90 60 84 66 Z" fill="#10b981" opacity="0.24"/><path d="M102 48 C114 48 124 56 120 68 C108 66 102 58 102 48 Z" fill="#34d399" opacity="0.26"/><path d="M112 36 C106 24 112 14 124 14 C124 26 118 32 112 36 Z" fill="#059669" opacity="0.22"/><circle cx="52" cy="36" r="10" fill="#facc15" opacity="0.2"/></svg>'
+        },
+        '05': {
+            icon: '🌸',
+            bg: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 55%, #ecfdf5 100%)',
+            border: '#f9a8d4',
+            titleColor: '#9d174d',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><g transform="translate(98,38)" opacity="0.28"><circle cx="0" cy="-12" r="8" fill="#ec4899"/><circle cx="11" cy="-4" r="8" fill="#f472b6"/><circle cx="7" cy="10" r="8" fill="#ec4899"/><circle cx="-7" cy="10" r="8" fill="#f472b6"/><circle cx="-11" cy="-4" r="8" fill="#ec4899"/><circle cx="0" cy="0" r="5" fill="#fde047"/></g><g transform="translate(56,28) scale(0.65)" opacity="0.22"><circle cx="0" cy="-12" r="8" fill="#f472b6"/><circle cx="11" cy="-4" r="8" fill="#ec4899"/><circle cx="7" cy="10" r="8" fill="#f472b6"/><circle cx="-7" cy="10" r="8" fill="#ec4899"/><circle cx="-11" cy="-4" r="8" fill="#f472b6"/><circle cx="0" cy="0" r="5" fill="#fde047"/></g><ellipse cx="76" cy="74" rx="5" ry="3" transform="rotate(-25 76 74)" fill="#f472b6" opacity="0.25"/></svg>'
+        },
+        '06': {
+            icon: '🌼',
+            bg: 'linear-gradient(135deg, #f0fdfa 0%, #dcfce7 55%, #fef9c3 100%)',
+            border: '#5eead4',
+            titleColor: '#115e59',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><g transform="translate(100,38)" opacity="0.32"><ellipse cx="0" cy="-15" rx="4.5" ry="10" fill="#ffffff"/><ellipse cx="0" cy="15" rx="4.5" ry="10" fill="#ffffff"/><ellipse cx="-15" cy="0" rx="10" ry="4.5" fill="#ffffff"/><ellipse cx="15" cy="0" rx="10" ry="4.5" fill="#ffffff"/><ellipse cx="-11" cy="-11" rx="4.5" ry="9" transform="rotate(-45 -11 -11)" fill="#ffffff"/><ellipse cx="11" cy="11" rx="4.5" ry="9" transform="rotate(-45 11 11)" fill="#ffffff"/><ellipse cx="11" cy="-11" rx="4.5" ry="9" transform="rotate(45 11 -11)" fill="#ffffff"/><ellipse cx="-11" cy="11" rx="4.5" ry="9" transform="rotate(45 -11 11)" fill="#ffffff"/><circle cx="0" cy="0" r="7" fill="#f59e0b"/></g><circle cx="52" cy="30" r="12" fill="#fde047" opacity="0.28"/></svg>'
+        },
+        '07': {
+            icon: '☀️',
+            bg: 'linear-gradient(135deg, #fefce8 0%, #fef08a 55%, #ffedd5 100%)',
+            border: '#fde047',
+            titleColor: '#854d0e',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><circle cx="106" cy="32" r="22" fill="#f59e0b" opacity="0.26"/><circle cx="106" cy="32" r="32" fill="#fbbf24" opacity="0.14"/><g stroke="#f59e0b" stroke-width="3" stroke-linecap="round" opacity="0.28"><line x1="106" y1="2" x2="106" y2="8"/><line x1="72" y1="32" x2="78" y2="32"/><line x1="82" y1="10" x2="87" y2="15"/><line x1="82" y1="54" x2="87" y2="49"/><line x1="106" y1="56" x2="106" y2="64"/></g></svg>'
+        },
+        '08': {
+            icon: '🌻',
+            bg: 'linear-gradient(135deg, #fffbeb 0%, #fde68a 55%, #fed7aa 100%)',
+            border: '#fbbf24',
+            titleColor: '#92400e',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><g transform="translate(104,40)" opacity="0.3"><circle cx="0" cy="0" r="20" fill="#f59e0b"/><circle cx="0" cy="0" r="10" fill="#78350f"/></g><path d="M62 84 C68 62 76 44 86 28" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" opacity="0.25"/><ellipse cx="70" cy="54" rx="3.5" ry="6" transform="rotate(-25 70 54)" fill="#f59e0b" opacity="0.26"/><ellipse cx="77" cy="42" rx="3.5" ry="6" transform="rotate(-25 77 42)" fill="#f59e0b" opacity="0.26"/><ellipse cx="80" cy="58" rx="3.5" ry="6" transform="rotate(35 80 58)" fill="#d97706" opacity="0.24"/><path d="M46 22 L48 27 L53 29 L48 31 L46 36 L44 31 L39 29 L44 27 Z" fill="#f59e0b" opacity="0.28"/></svg>'
+        },
+        '09': {
+            icon: '🍂',
+            bg: 'linear-gradient(135deg, #fefce8 0%, #ffedd5 55%, #fde68a 100%)',
+            border: '#fdba74',
+            titleColor: '#9a3412',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M98 18 C114 26 118 46 102 60 C86 46 88 26 98 18 Z" fill="#ea580c" opacity="0.22"/><path d="M98 18 L102 66" stroke="#9a3412" stroke-width="2" stroke-linecap="round" opacity="0.25"/><path d="M64 34 C76 38 78 52 66 62 C54 52 56 38 64 34 Z" fill="#d97706" opacity="0.22"/><path d="M118 68 C128 72 130 84 120 92 C110 84 112 72 118 68 Z" fill="#f59e0b" opacity="0.24"/></svg>'
+        },
+        '10': {
+            icon: '🍁',
+            bg: 'linear-gradient(135deg, #fff7ed 0%, #fed7aa 55%, #fecaca 100%)',
+            border: '#fb923c',
+            titleColor: '#9a3412',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M102 16 L108 30 L122 26 L114 40 L126 48 L110 52 L112 64 L102 56 L92 64 L94 52 L78 48 L90 40 L82 26 L96 30 Z" fill="#dc2626" opacity="0.2"/><path d="M102 52 L102 72" stroke="#9a3412" stroke-width="2.2" stroke-linecap="round" opacity="0.25"/><path d="M58 26 L62 34 L70 32 L65 40 L72 45 L62 47 L63 54 L58 49 L53 54 L54 47 L44 45 L51 40 L46 32 L54 34 Z" fill="#ea580c" opacity="0.18"/></svg>'
+        },
+        '11': {
+            icon: '🌧️',
+            bg: 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 55%, #ffedd5 100%)',
+            border: '#cbd5e1',
+            titleColor: '#334155',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><path d="M74 22 C92 32 104 46 112 64" stroke="#475569" stroke-width="2.2" stroke-linecap="round" opacity="0.24"/><circle cx="94" cy="48" r="5" fill="#dc2626" opacity="0.25"/><circle cx="104" cy="52" r="5" fill="#ef4444" opacity="0.25"/><circle cx="98" cy="58" r="5" fill="#dc2626" opacity="0.25"/><circle cx="108" cy="61" r="4.5" fill="#b91c1c" opacity="0.25"/><line x1="60" y1="24" x2="54" y2="38" stroke="#64748b" stroke-width="2" stroke-linecap="round" opacity="0.22"/><line x1="122" y1="22" x2="116" y2="36" stroke="#64748b" stroke-width="2" stroke-linecap="round" opacity="0.22"/></svg>'
+        },
+        '12': {
+            icon: '🎄',
+            bg: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #fef3c7 100%)',
+            border: '#34d399',
+            titleColor: '#065f46',
+            svg: '<svg viewBox="0 0 140 140" fill="none"><polygon points="102,16 84,42 94,42 78,64 90,64 74,86 130,86 114,64 126,64 110,42 120,42" fill="#059669" opacity="0.22"/><polygon points="102,8 104,13 109,14 105,17 106,22 102,19 98,22 99,17 95,14 100,13" fill="#f59e0b" opacity="0.38"/><circle cx="96" cy="48" r="3.5" fill="#ef4444" opacity="0.35"/><circle cx="110" cy="58" r="3.5" fill="#f59e0b" opacity="0.38"/><circle cx="92" cy="72" r="3.5" fill="#3b82f6" opacity="0.35"/><circle cx="112" cy="76" r="3.5" fill="#ef4444" opacity="0.35"/></svg>'
+        }
+    };
+
+    function getSmallIcon(platform) {
+        if (platform === 'Авито 1' || platform === 'Авито') {
+            return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/><circle cx="15" cy="14" r="4.5" fill="#00AAFF"/><circle cx="24.5" cy="12" r="3" fill="#00E065"/><circle cx="13.5" cy="24" r="3.2" fill="#9747FF"/><circle cx="23.5" cy="23.5" r="5.2" fill="#FF4053"/><circle cx="31.5" cy="31.5" r="7" fill="#0f172a"/><text x="31.5" y="34.8" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="sans-serif">1</text></svg>';
+        }
+        if (platform === 'Авито 2') {
+            return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/><circle cx="15" cy="14" r="4.5" fill="#00AAFF"/><circle cx="24.5" cy="12" r="3" fill="#00E065"/><circle cx="13.5" cy="24" r="3.2" fill="#9747FF"/><circle cx="23.5" cy="23.5" r="5.2" fill="#FF4053"/><circle cx="31.5" cy="31.5" r="7" fill="#059669"/><text x="31.5" y="34.8" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="800" font-family="sans-serif">2</text></svg>';
+        }
+        if (platform === 'WB' || platform === 'Вайлдберриз') {
+            return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#7c118f"/><text x="20" y="25.5" text-anchor="middle" fill="#ffffff" font-size="15.5" font-weight="900" font-family="sans-serif" letter-spacing="-0.5">WB</text></svg>';
+        }
+        if (platform === 'Вацап' || platform === 'Ватсап') {
+            return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#25D366"/><path d="M20 9.5c-5.8 0-10.5 4.7-10.5 10.5 0 1.9.5 3.7 1.4 5.3L9.5 30.5l5.4-1.4c1.5.8 3.3 1.3 5.1 1.3 5.8 0 10.5-4.7 10.5-10.5S25.8 9.5 20 9.5z" fill="#ffffff"/><path d="M25.4 23.2c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.8.9-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.2.2-.4.1-.1 0-.3 0-.4-.1-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.7.3-.2.2-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.7 4.3 3.8.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z" fill="#25D366"/></svg>';
+        }
+        if (platform === 'Телеграм') {
+            return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#2AABEE"/><path d="M28.5 12.2L10.3 19.2c-1.2.5-1.2 1.2-.2 1.5l4.7 1.5 10.8-6.8c.5-.3 1-.1.6.2l-8.8 7.9-.3 4.8c.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.7c.3-1.3-.5-1.9-1.5-1.4z" fill="#ffffff"/></svg>';
+        }
+        return '<svg width="30" height="30" viewBox="0 0 40 40" style="vertical-align:middle;"><rect width="40" height="40" rx="10" fill="#5b5ce6"/><path d="M20 9.5c-5.8 0-10.5 4.4-10.5 9.8 0 2.5 1 4.8 2.7 6.5-.2 1.6-.9 3.3-.9 3.3s2.1-.3 3.9-1.2c1.5.6 3.1.9 4.8.9 5.8 0 10.5-4.4 10.5-9.8S25.8 9.5 20 9.5z" fill="#ffffff" fill-opacity="0.22"/><text x="20" y="24" text-anchor="middle" fill="#ffffff" font-size="13.5" font-weight="900" font-family="sans-serif">M</text></svg>';
+    }
+
+    function normalizePlatform(p) {
+        if (p === 'Авито') return 'Авито 1';
+        if (p === 'Вайлдберриз') return 'WB';
+        if (p === 'Ватсап') return 'Вацап';
+        if (p === 'Макс') return 'Мах';
+        return p;
+    }
+
+    function selectPlatform(name) {
+        selectedPlatform = name;
+        var btns = document.querySelectorAll('.platform-btn');
+        for (var i = 0; i < btns.length; i++) {
+            if (btns[i].getAttribute('data-platform') === name) {
+                btns[i].classList.add('active');
+            } else {
+                btns[i].classList.remove('active');
+            }
+        }
+    }
+
+    function showToast(msg) {
+        var el = document.getElementById('toast');
+        el.textContent = msg;
+        el.style.display = 'block';
+        setTimeout(function() {
+            el.style.display = 'none';
+        }, 2400);
+    }
+
+    function loadSales() {
+        try {
+            var raw = localStorage.getItem(STORAGE_KEY);
+            return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveSales(data) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+            showToast('Не удалось сохранить в память браузера');
+        }
+    }
+
+    function formatMoney(val) {
+        var num = Number(val) || 0;
+        var parts = num.toFixed(num % 1 === 0 ? 0 : 2).split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        return parts.join(',') + ' ₽';
+    }
+
+    function formatDateRu(isoDate) {
+        var p = isoDate.split('-');
+        if (p.length !== 3) return isoDate;
+        return p[2] + '.' + p[1] + '.' + p[0];
+    }
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function applyMonthSeasonTheme(monthStr) {
+        var mNum = monthStr.split('-')[1] || '01';
+        var theme = MONTH_THEMES[mNum] || MONTH_THEMES['01'];
+        var card = document.getElementById('monthSummaryCard');
+        var art = document.getElementById('seasonArt');
+        var title = document.getElementById('monthCardTitle');
+
+        card.style.background = theme.bg;
+        card.style.borderColor = theme.border;
+        art.innerHTML = theme.svg;
+        title.style.color = theme.titleColor;
+        title.innerHTML = theme.icon + ' Итоги за месяц';
+    }
+
+    function addSale(e) {
+        e.preventDefault();
+        var dateVal = document.getElementById('saleDate').value;
+        var amountVal = parseFloat(document.getElementById('saleAmount').value);
+        var productVal = document.getElementById('saleProduct').value.trim();
+        var fairyVal = document.getElementById('saleFairy').checked;
+        var reviewVal = document.getElementById('saleReview').checked;
+
+        if (!dateVal || isNaN(amountVal) || !productVal) return;
+
+        var sales = loadSales();
+        sales.unshift({
+            id: Date.now(),
+            sale_date: dateVal,
+            product: productVal,
+            platform: selectedPlatform,
+            amount: amountVal,
+            from_fairy: fairyVal,
+            has_review: reviewVal
+        });
+        saveSales(sales);
+
+        document.getElementById('saleProduct').value = '';
+        document.getElementById('saleAmount').value = '';
+        document.getElementById('saleFairy').checked = false;
+        document.getElementById('saleReview').checked = false;
+        document.getElementById('monthPicker').value = dateVal.slice(0, 7);
+
+        renderAll();
+        showToast('Продажа добавлена');
+    }
+
+    function toggleReview(id) {
+        var sales = loadSales();
+        for (var i = 0; i < sales.length; i++) {
+            if (sales[i].id === id) {
+                sales[i].has_review = !sales[i].has_review;
+                break;
+            }
+        }
+        saveSales(sales);
+        renderAll();
+    }
+
+    function openDeleteModal(id) {
+        var sales = loadSales();
+        var target = null;
+        for (var i = 0; i < sales.length; i++) {
+            if (sales[i].id === id) {
+                target = sales[i];
+                break;
+            }
+        }
+        if (!target) return;
+        pendingDeleteId = id;
+        document.getElementById('deleteModalText').textContent =
+            'Удалить «' + target.product + '» на сумму ' + formatMoney(target.amount) + '?';
+        document.getElementById('deleteModal').classList.add('open');
+    }
+
+    function closeDeleteModal() {
+        pendingDeleteId = null;
+        document.getElementById('deleteModal').classList.remove('open');
+    }
+
+    function confirmDeleteSale() {
+        if (pendingDeleteId === null) return;
+        var sales = loadSales().filter(function(item) {
+            return item.id !== pendingDeleteId;
+        });
+        saveSales(sales);
+        closeDeleteModal();
+        renderAll();
+        showToast('Запись удалена');
+    }
+
+    function changeMonth(delta) {
+        var picker = document.getElementById('monthPicker');
+        var parts = picker.value.split('-');
+        var y = parseInt(parts[0], 10);
+        var m = parseInt(parts[1], 10) - 1 + delta;
+        var d = new Date(y, m, 1);
+        var ny = d.getFullYear();
+        var nm = String(d.getMonth() + 1).padStart(2, '0');
+        picker.value = ny + '-' + nm;
+        renderAll();
+    }
+
+    function renderAll() {
+        var selectedMonth = document.getElementById('monthPicker').value;
+        var selectedYear = selectedMonth.slice(0, 4);
+
+        applyMonthSeasonTheme(selectedMonth);
+
+        var allSales = loadSales();
+
+        // Фильтрация за выбранный месяц
+        var monthSales = allSales.filter(function(item) {
+            return item.sale_date && item.sale_date.indexOf(selectedMonth) === 0;
+        });
+
+        monthSales.sort(function(a, b) {
+            if (b.sale_date !== a.sale_date) return b.sale_date.localeCompare(a.sale_date);
+            return b.id - a.id;
+        });
+
+        // Расчёт итогов за месяц
+        var summaryHtml = '';
+        var grandCount = 0;
+        var grandTotal = 0;
+        var fairyCount = 0;
+        var fairyTotal = 0;
+        var reviewCount = 0;
+        var reviewTotal = 0;
+
+        for (var i = 0; i < PLATFORMS.length; i++) {
+            var plat = PLATFORMS[i];
+            var pCount = 0;
+            var pTotal = 0;
+
+            for (var j = 0; j < monthSales.length; j++) {
+                if (normalizePlatform(monthSales[j].platform) === plat) {
+                    pCount++;
+                    pTotal += Number(monthSales[j].amount) || 0;
+                }
+            }
+
+            grandCount += pCount;
+            grandTotal += pTotal;
+
+            summaryHtml += '<tr>' +
+                '<td>' + getSmallIcon(plat) + '</td>' +
+                '<td class="num">' + pCount + ' шт.</td>' +
+                '<td class="num" style="font-weight:700;">' + formatMoney(pTotal) + '</td>' +
+                '</tr>';
+        }
+
+        for (var k = 0; k < monthSales.length; k++) {
+            var amt = Number(monthSales[k].amount) || 0;
+            if (monthSales[k].from_fairy) {
+                fairyCount++;
+                fairyTotal += amt;
+            }
+            if (monthSales[k].has_review) {
+                reviewCount++;
+                reviewTotal += amt;
+            }
+        }
+
+        summaryHtml += '<tr class="row-total">' +
+            '<td class="total-label">ИТОГО<br>ЗА МЕСЯЦ</td>' +
+            '<td class="num">' + grandCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(grandTotal) + '</td>' +
+            '</tr>';
+
+        summaryHtml += '<tr class="row-fairy">' +
+            '<td class="total-label">🧚 в том числе<br>от феи</td>' +
+            '<td class="num">' + fairyCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(fairyTotal) + '</td>' +
+            '</tr>';
+
+        summaryHtml += '<tr class="row-review">' +
+            '<td class="total-label">⭐ Отзывы</td>' +
+            '<td class="num">' + reviewCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(reviewTotal) + '</td>' +
+            '</tr>';
+
+        document.getElementById('summaryBody').innerHTML = summaryHtml;
+
+        // Расчёт итогов за весь выбранный год
+        document.getElementById('yearBadge').textContent = selectedYear + ' год';
+        var yearSales = allSales.filter(function(item) {
+            return item.sale_date && item.sale_date.indexOf(selectedYear) === 0;
+        });
+
+        var yearTotalCount = yearSales.length;
+        var yearTotalSum = 0;
+        var yearFairyCount = 0;
+        var yearFairySum = 0;
+        var yearReviewCount = 0;
+        var yearReviewSum = 0;
+
+        for (var y = 0; y < yearSales.length; y++) {
+            var yAmt = Number(yearSales[y].amount) || 0;
+            yearTotalSum += yAmt;
+            if (yearSales[y].from_fairy) {
+                yearFairyCount++;
+                yearFairySum += yAmt;
+            }
+            if (yearSales[y].has_review) {
+                yearReviewCount++;
+                yearReviewSum += yAmt;
+            }
+        }
+
+        var yearHtml = '';
+        yearHtml += '<tr class="row-year-total">' +
+            '<td class="total-label">ИТОГО<br>ЗА ГОД</td>' +
+            '<td class="num">' + yearTotalCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(yearTotalSum) + '</td>' +
+            '</tr>';
+
+        yearHtml += '<tr class="row-fairy">' +
+            '<td class="total-label">🧚 в том числе<br>от феи</td>' +
+            '<td class="num">' + yearFairyCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(yearFairySum) + '</td>' +
+            '</tr>';
+
+        yearHtml += '<tr class="row-review">' +
+            '<td class="total-label">⭐ Отзывы</td>' +
+            '<td class="num">' + yearReviewCount + ' шт.</td>' +
+            '<td class="num">' + formatMoney(yearReviewSum) + '</td>' +
+            '</tr>';
+
+        document.getElementById('yearSummaryBody').innerHTML = yearHtml;
+
+        // Список продаж за месяц
+        document.getElementById('salesCountBadge').textContent = monthSales.length + ' шт.';
+        var listEl = document.getElementById('salesList');
+
+        if (monthSales.length === 0) {
+            listEl.innerHTML = '<div class="empty-state">За этот месяц продаж пока нет</div>';
+            return;
+        }
+
+        var listHtml = '';
+        for (var m = 0; m < monthSales.length; m++) {
+            var s = monthSales[m];
+            var fairyBadge = s.from_fairy ? '<span class="badge-fairy">🧚 От феи</span>' : '';
+            var reviewBadge = s.has_review
+                ? '<span class="badge-review" onclick="toggleReview(' + s.id + ')" title="Нажмите, чтобы снять отметку">⭐ Отзыв</span>'
+                : '<span class="badge-review-off" onclick="toggleReview(' + s.id + ')" title="Нажмите, чтобы отметить отзыв">☆ Отзыв</span>';
+
+            listHtml += '<div class="sale-item">' +
+                '<div class="sale-left">' +
+                    getSmallIcon(s.platform) +
+                    '<div class="sale-info">' +
+                        '<div class="sale-title">' + escapeHtml(s.product) + '</div>' +
+                        '<div class="sale-meta">' +
+                            '<span>' + formatDateRu(s.sale_date) + '</span>' +
+                            fairyBadge +
+                            reviewBadge +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sale-right">' +
+                    '<span class="sale-amount">' + formatMoney(s.amount) + '</span>' +
+                    '<button type="button" class="btn-del" onclick="openDeleteModal(' + s.id + ')" title="Удалить">✕</button>' +
+                '</div>' +
+            '</div>';
+        }
+        listEl.innerHTML = listHtml;
+    }
+
+    function exportCSV() {
+        var selectedMonth = document.getElementById('monthPicker').value;
+        var sales = loadSales().filter(function(item) {
+            return item.sale_date && item.sale_date.indexOf(selectedMonth) === 0;
+        });
+
+        if (sales.length === 0) {
+            showToast('За этот месяц нет данных');
+            return;
+        }
+
+        var lines = ['Дата;Товар;Площадка;От феи;Отзыв;Сумма'];
+        for (var i = 0; i < sales.length; i++) {
+            var s = sales[i];
+            var prod = '"' + String(s.product).replace(/"/g, '""') + '"';
+            var amt = String(s.amount).replace('.', ',');
+            lines.push([
+                s.sale_date,
+                prod,
+                normalizePlatform(s.platform),
+                s.from_fairy ? 'Да' : 'Нет',
+                s.has_review ? 'Да' : 'Нет',
+                amt
+            ].join(';'));
+        }
+
+        var blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'sales_' + selectedMonth + '.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function exportJSON() {
+        var sales = loadSales();
+        var blob = new Blob([JSON.stringify(sales, null, 2)], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'sales_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('Резервная копия скачана');
+    }
+
+    function importJSON(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            try {
+                var parsed = JSON.parse(evt.target.result);
+                if (!Array.isArray(parsed)) throw new Error('bad format');
+                var cleaned = parsed.map(function(item, idx) {
+                    return {
+                        id: item.id || (Date.now() + idx),
+                        sale_date: item.sale_date || item.date,
+                        product: item.product,
+                        platform: normalizePlatform(item.platform),
+                        amount: Number(item.amount) || 0,
+                        from_fairy: Boolean(item.from_fairy !== undefined ? item.from_fairy : item.fromFairy),
+                        has_review: Boolean(item.has_review !== undefined ? item.has_review : item.isReview)
+                    };
+                });
+                saveSales(cleaned);
+                if (cleaned.length > 0 && cleaned[0].sale_date) {
+                    document.getElementById('monthPicker').value = cleaned[0].sale_date.slice(0, 7);
+                }
+                renderAll();
+                showToast('Загружено записей: ' + cleaned.length);
+            } catch (err) {
+                showToast('Ошибка: неверный файл копии');
+            }
+            e.target.value = '';
+        };
+        reader.readAsText(file);
+    }
+
+    // Инициализация при запуске (пустая база, сегодняшняя дата)
+    (function init() {
+        var now = new Date();
+        var yyyy = now.getFullYear();
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var dd = String(now.getDate()).padStart(2, '0');
+        var today = yyyy + '-' + mm + '-' + dd;
+
+        document.getElementById('saleDate').value = today;
+        document.getElementById('monthPicker').value = yyyy + '-' + mm;
+        renderAll();
+    })();
+</script>
+</body>
+</html>
