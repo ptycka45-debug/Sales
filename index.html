@@ -1075,7 +1075,6 @@
         var fairyCount = 0;
         var fairyTotal = 0;
         var reviewCount = 0;
-        var reviewTotal = 0;
 
         for (var i = 0; i < PLATFORMS.length; i++) {
             var plat = PLATFORMS[i];
@@ -1107,7 +1106,6 @@
             }
             if (monthSales[k].has_review) {
                 reviewCount++;
-                reviewTotal += amt;
             }
         }
 
@@ -1126,7 +1124,7 @@
         summaryHtml += '<tr class="row-review">' +
             '<td class="total-label">⭐ Отзывы</td>' +
             '<td class="num">' + reviewCount + ' шт.</td>' +
-            '<td class="num">' + formatMoney(reviewTotal) + '</td>' +
+            '<td class="num"></td>' +
             '</tr>';
 
         document.getElementById('summaryBody').innerHTML = summaryHtml;
@@ -1142,7 +1140,6 @@
         var yearFairyCount = 0;
         var yearFairySum = 0;
         var yearReviewCount = 0;
-        var yearReviewSum = 0;
 
         for (var y = 0; y < yearSales.length; y++) {
             var yAmt = Number(yearSales[y].amount) || 0;
@@ -1153,7 +1150,6 @@
             }
             if (yearSales[y].has_review) {
                 yearReviewCount++;
-                yearReviewSum += yAmt;
             }
         }
 
@@ -1173,7 +1169,7 @@
         yearHtml += '<tr class="row-review">' +
             '<td class="total-label">⭐ Отзывы</td>' +
             '<td class="num">' + yearReviewCount + ' шт.</td>' +
-            '<td class="num">' + formatMoney(yearReviewSum) + '</td>' +
+            '<td class="num"></td>' +
             '</tr>';
 
         document.getElementById('yearSummaryBody').innerHTML = yearHtml;
