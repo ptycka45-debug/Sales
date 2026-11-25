@@ -160,8 +160,8 @@
         }
         .nav-tabs {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
             background: #2b120b;
             border: 1.5px solid var(--outline);
             padding: 4px;
@@ -171,18 +171,20 @@
             border: 1.5px solid transparent;
             background: transparent;
             color: var(--apricot);
-            padding: 10px 8px;
+            padding: 9px 4px;
             border-radius: 10px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             cursor: pointer;
             transition: background 0.15s ease, color 0.15s ease;
             white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        @media (max-width: 390px) {
+        @media (max-width: 380px) {
             .nav-tab-btn {
-                font-size: 12px;
-                padding: 9px 4px;
+                font-size: 11px;
+                padding: 8px 2px;
             }
         }
         .nav-tab-btn.active {
@@ -989,6 +991,380 @@
             background: rgba(232, 198, 165, 0.3);
         }
 
+        /* Стили вкладки Итоги дня */
+        .daily-form-top-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: end;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 480px) {
+            .daily-form-top-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .wallpaper-picker-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+        .wp-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--border-soft);
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease;
+            flex-shrink: 0;
+        }
+        .wp-dot.active {
+            border: 2.5px solid var(--terra);
+            transform: scale(1.12);
+            box-shadow: 0 0 0 2px var(--peach);
+        }
+        .daily-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        @media (max-width: 480px) {
+            .daily-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .daily-form-sub-header {
+            grid-column: 1 / -1;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--ink-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-top: 6px;
+            padding: 4px 2px 2px;
+            border-bottom: 1px dashed var(--border-soft);
+        }
+        .daily-form-field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            background: var(--bg-input);
+            border: 1.5px solid var(--border-soft);
+            border-radius: 11px;
+            padding: 7px 8px;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+        }
+        .daily-form-field.is-sub {
+            background: #f8eedc;
+            border-style: dashed;
+        }
+        .daily-form-field.dragging {
+            opacity: 0.45;
+            border-color: var(--terra);
+            background: var(--peach);
+        }
+        .daily-form-field.drag-over {
+            border: 2px dashed var(--terra);
+            box-shadow: 0 3px 10px rgba(214, 98, 66, 0.22);
+        }
+        .daily-reorder-box {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .daily-drag-handle {
+            cursor: grab;
+            color: var(--ink-muted);
+            font-size: 14px;
+            padding: 2px 3px;
+            user-select: none;
+            opacity: 0.65;
+            line-height: 1;
+        }
+        .daily-drag-handle:active {
+            cursor: grabbing;
+        }
+        .daily-move-arrows {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+        .daily-arrow-btn {
+            width: 18px;
+            height: 13px;
+            border: 1px solid var(--border-soft);
+            background: var(--bg-card);
+            color: var(--ink-muted);
+            font-size: 8px;
+            line-height: 1;
+            border-radius: 4px;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .daily-arrow-btn:active {
+            background: var(--peach);
+            color: var(--ink);
+        }
+        .daily-form-label-wrap {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-width: 0;
+            flex: 1;
+        }
+        .daily-form-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.2;
+            cursor: pointer;
+            word-break: break-word;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .daily-edit-hint {
+            font-size: 11px;
+            opacity: 0.45;
+            flex-shrink: 0;
+        }
+        .daily-step-box {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .daily-step-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border-soft);
+            background: var(--bg-card);
+            color: var(--ink);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .daily-step-btn:active {
+            background: var(--peach);
+        }
+        .daily-step-input {
+            width: 44px !important;
+            height: 26px;
+            padding: 0 2px !important;
+            text-align: center;
+            font-size: 13px !important;
+            font-weight: 800 !important;
+            border-radius: 7px !important;
+            background: #fffdf8 !important;
+        }
+        .daily-bool-group {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .daily-bool-btn {
+            padding: 4px 10px;
+            border-radius: 7px;
+            border: 1.5px solid var(--border-soft);
+            background: var(--bg-card);
+            color: var(--ink-muted);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .daily-bool-btn.active-yes {
+            background: #dce8e4;
+            border-color: var(--sage);
+            color: var(--ink);
+        }
+        .daily-bool-btn.active-no {
+            background: #f5dce0;
+            border-color: var(--rose);
+            color: var(--ink);
+        }
+        .daily-item-del-btn {
+            background: none;
+            border: none;
+            color: var(--ink-muted);
+            font-size: 14px;
+            cursor: pointer;
+            padding: 2px 3px;
+            opacity: 0.7;
+            flex-shrink: 0;
+        }
+        .daily-item-del-btn:hover {
+            color: var(--terra);
+            opacity: 1;
+        }
+        .daily-add-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-soft);
+        }
+        .daily-save-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        /* Накладная карточка отчёта за день */
+        .daily-cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .daily-overlay-wrapper {
+            border-radius: 22px;
+            padding: 13px;
+            border: 2px solid var(--outline);
+            box-shadow: 0 10px 26px rgba(24, 9, 5, 0.35);
+            position: relative;
+            overflow: hidden;
+            max-height: calc(100vh - 24px);
+            display: flex;
+            flex-direction: column;
+            max-width: 460px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .daily-overlay-sheet {
+            background: rgba(253, 249, 240, 0.94);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 14px 16px;
+            border: 1.5px solid rgba(110, 59, 42, 0.25);
+            box-shadow: 0 4px 16px rgba(59, 27, 18, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .daily-sheet-header {
+            text-align: center;
+            padding-bottom: 10px;
+            margin-bottom: 7px;
+            border-bottom: 1.5px dashed rgba(110, 59, 42, 0.32);
+            flex-shrink: 0;
+        }
+        .daily-sheet-title {
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--ink);
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+        .daily-report-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .daily-report-line {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 5px 2px;
+            font-size: 16px;
+            color: var(--ink);
+            gap: 6px;
+        }
+        .daily-report-line.is-sub {
+            padding-left: 18px;
+            font-size: 15px;
+        }
+        .daily-report-group {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--ink);
+            padding: 6px 2px 1px;
+        }
+        .daily-line-name {
+            font-weight: 700;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .daily-line-dots {
+            flex: 1;
+            border-bottom: 2px dotted rgba(110, 59, 42, 0.3);
+            margin: 0 5px;
+            position: relative;
+            top: -4px;
+            min-width: 14px;
+        }
+        .daily-line-val-pill {
+            font-weight: 900;
+            font-size: 16.5px;
+            color: var(--ink);
+            background: rgba(235, 176, 82, 0.28);
+            border: 1.5px solid rgba(110, 59, 42, 0.25);
+            padding: 1px 11px;
+            border-radius: 999px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .daily-line-bool {
+            font-weight: 900;
+            padding: 1px 12px;
+            border-radius: 999px;
+            font-size: 15px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .daily-line-bool.yes {
+            background: #dce8e4;
+            border: 1px solid var(--sage);
+            color: var(--ink);
+        }
+        .daily-line-bool.no {
+            background: #f5dce0;
+            border: 1px solid var(--rose);
+            color: var(--ink);
+        }
+        .daily-card-actions-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 9px;
+            border-top: 1.5px dashed rgba(110, 59, 42, 0.25);
+            flex-shrink: 0;
+        }
+        .btn-daily-card-act {
+            padding: 7px 6px;
+            border-radius: 9px;
+            border: 1.5px solid var(--border-soft);
+            background: var(--bg-input);
+            color: var(--ink);
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .btn-daily-card-act:active {
+            background: var(--peach);
+        }
+        .btn-daily-card-act.danger {
+            background: #fdf2f2;
+            border-color: #e6bcc3;
+            color: #9b2c2c;
+        }
+
         .toast {
             position: fixed;
             bottom: 20px;
@@ -1036,8 +1412,9 @@
 <div class="nav-tabs-wrap">
     <div class="nav-tabs">
         <button type="button" class="nav-tab-btn active" id="tabBtnSales" onclick="switchTab('sales')">📦 Продажи</button>
-        <button type="button" class="nav-tab-btn" id="tabBtnMonths" onclick="switchTab('months')">📊 По месяцам</button>
+        <button type="button" class="nav-tab-btn" id="tabBtnMonths" onclick="switchTab('months')">📊 Месяцы</button>
         <button type="button" class="nav-tab-btn" id="tabBtnPrep" onclick="switchTab('prep')">📋 Подготовка</button>
+        <button type="button" class="nav-tab-btn" id="tabBtnDaily" onclick="switchTab('daily')">✨ Итоги дня</button>
     </div>
 </div>
 
@@ -1279,9 +1656,44 @@
 
         <div id="prepItemsContainer" class="prep-list"></div>
     </div>
+
+    <div id="panelDaily" class="tab-panel">
+        <section class="card">
+            <h2 class="card-title" id="dailyFormCardTitle"><span class="dot-green"></span> Заполнить итоги дня</h2>
+
+            <div class="daily-form-top-grid">
+                <div>
+                    <label class="field-label" for="dailyDateInput">Дата отчёта</label>
+                    <input type="date" id="dailyDateInput" style="padding:8px 10px; font-size:14px;">
+                </div>
+                <div>
+                    <label class="field-label">Обои карточки</label>
+                    <div class="wallpaper-picker-row" id="wallpaperPicker"></div>
+                </div>
+            </div>
+
+            <div class="daily-form-grid" id="dailyFormGrid"></div>
+
+            <div id="dailyRestoreSchemaWrap" style="display:none; text-align:right; margin-top:6px;">
+                <button type="button" onclick="restoreDefaultDailySchema()" style="background:none; border:none; color:var(--ink-muted); font-size:11px; font-weight:700; text-decoration:underline; cursor:pointer;">↺ Вернуть стандартные пункты</button>
+            </div>
+
+            <form class="daily-add-row" onsubmit="addCustomDailyItem(event)">
+                <input type="text" id="dailyNewItemInput" placeholder="Добавить свой пункт..." style="padding:9px 11px; font-size:14px;">
+                <button type="submit" class="prep-add-btn" style="padding:9px 14px; font-size:13px;">+ Пункт</button>
+            </form>
+
+            <div class="daily-save-actions">
+                <button type="button" class="btn-submit" id="btnSaveDailyCard" onclick="saveDailyCard()">💾 Сохранить отчёт за день</button>
+                <button type="button" class="btn-modal-cancel" id="btnCancelDailyEdit" style="display:none; padding:12px 14px; white-space:nowrap;" onclick="cancelDailyEdit()">Отмена</button>
+            </div>
+        </section>
+
+        <div class="daily-cards-list" id="dailyCardsListContainer"></div>
+    </div>
 </main>
 
-<div class="modal-backdrop" id="deleteModal">
+<div class="modal-backdrop" id="deleteModal" onclick="if(event.target===this)closeDeleteModal()">
     <div class="modal-card">
         <h3 class="modal-title">Удалить запись?</h3>
         <p class="modal-text" id="deleteModalText">Вы уверены, что хотите удалить эту продажу?</p>
@@ -1300,6 +1712,32 @@
             <button type="button" class="btn-modal-cancel" onclick="closeDeletePrepModal()">Отмена</button>
             <button type="button" class="btn-modal-confirm" onclick="confirmDeletePrep()">Удалить</button>
         </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="deleteDailyCardModal" onclick="if(event.target===this)closeDeleteDailyCardModal()">
+    <div class="modal-card">
+        <h3 class="modal-title">Удалить карточку дня?</h3>
+        <p class="modal-text" id="deleteDailyCardModalText">Вы уверены, что хотите удалить этот отчёт за день?</p>
+        <div class="modal-actions">
+            <button type="button" class="btn-modal-cancel" onclick="closeDeleteDailyCardModal()">Отмена</button>
+            <button type="button" class="btn-modal-confirm" onclick="confirmDeleteDailyCard()">Удалить</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="editDailyLabelModal" onclick="if(event.target===this)closeEditDailyLabelModal()">
+    <div class="modal-card">
+        <h3 class="modal-title">✏️ Название пункта</h3>
+        <form onsubmit="saveEditDailyLabel(event)">
+            <div style="margin-bottom: 14px;">
+                <input type="text" id="editDailyLabelInput" placeholder="Название пункта..." required>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-modal-cancel" onclick="closeEditDailyLabelModal()">Отмена</button>
+                <button type="submit" class="btn-modal-confirm">Сохранить</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -1408,6 +1846,10 @@
 
     var STORAGE_KEY = 'sales_tracker_data_v3';
     var PREP_STORAGE_KEY = 'sales_prep_items_v1';
+    var DAILY_CARDS_KEY = 'sales_daily_cards_list_v1';
+    var DAILY_SCHEMA_KEY = 'sales_daily_schema_v3';
+    var DAILY_WALLPAPER_KEY = 'sales_daily_wallpaper_v1';
+
     var PLATFORMS = ['Авито 1', 'Авито 2', 'WB', 'Вацап', 'Телеграм', 'Мах'];
     var MONTH_NAMES_SHORT = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
     var MONTH_NAMES_FULL = [
@@ -1420,6 +1862,106 @@
     var pendingDeletePrepId = null;
     var pendingEditPrepId = null;
     var pendingSoldPrepItem = null;
+
+    var dailyDraftValues = {};
+    var editingDailyCardId = null;
+    var pendingDeleteDailyCardId = null;
+    var pendingEditDailyLabelKey = null;
+
+    var DEFAULT_DAILY_SCHEMA = [
+        { key: 'photographed', label: 'Сфоткано', icon: '📷', type: 'number' },
+        { key: 'photos_ready', label: 'Подготовлено фото', icon: '✨', type: 'number' },
+        { key: 'group_pub', type: 'group', label: 'Выложено:', icon: '📤' },
+        { key: 'pub_avito', label: 'авито', type: 'number', sub: true, groupKey: 'group_pub' },
+        { key: 'pub_wb', label: 'вб', type: 'number', sub: true, groupKey: 'group_pub' },
+        { key: 'pub_flea', label: 'барахолки', type: 'number', sub: true, groupKey: 'group_pub' },
+        { key: 'renewed', label: 'Продлено', icon: '🔄', type: 'number' },
+        { key: 'relisted', label: 'Перевыложено', icon: '♻️', type: 'number' },
+        { key: 'drafts', label: 'Черновики', icon: '📝', type: 'number' },
+        { key: 'group_orders', type: 'group', label: 'Сегодня заказов:', icon: '🛍️' },
+        { key: 'ord_avito', label: 'Авито', type: 'number', sub: true, groupKey: 'group_orders' },
+        { key: 'ord_wb', label: 'Валдбериз', type: 'number', sub: true, groupKey: 'group_orders' },
+        { key: 'ord_flea', label: 'Барахолки', type: 'number', sub: true, groupKey: 'group_orders' },
+        { key: 'shipped', label: 'Отправлено', icon: '📦', type: 'number' },
+        { key: 'reviews', label: 'Отзывы', icon: '⭐', type: 'number' },
+        { key: 'payments', label: 'Оплаты', icon: '💳', type: 'number' },
+        { key: 'afonya', label: 'Афоня', icon: '🐾', type: 'bool' }
+    ];
+
+    var DAILY_WALLPAPERS = [
+        {
+            id: 'peach',
+            name: 'Персиковый',
+            dotBg: 'linear-gradient(135deg, #e39382, #fad7a8)',
+            style: 'background-color: #e39382; background-image: radial-gradient(circle at 20px 20px, rgba(255,255,255,0.28) 7px, transparent 8px), radial-gradient(circle at 60px 60px, rgba(214,98,66,0.22) 9px, transparent 10px), linear-gradient(135deg, #e39382 0%, #fad7a8 100%); background-size: 80px 80px, 80px 80px, 100% 100%;'
+        },
+        {
+            id: 'sage',
+            name: 'Шалфей',
+            dotBg: 'linear-gradient(135deg, #5f726b, #a8c2b8)',
+            style: 'background-color: #5f726b; background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 12px, transparent 12px, transparent 24px), linear-gradient(135deg, #5f726b 0%, #9ab5ab 100%);'
+        },
+        {
+            id: 'sky',
+            name: 'Небесный',
+            dotBg: 'linear-gradient(135deg, #628c99, #b5d2db)',
+            style: 'background-color: #6b95a2; background-image: radial-gradient(rgba(255,255,255,0.32) 2px, transparent 2px), radial-gradient(rgba(255,255,255,0.22) 2px, transparent 2px), linear-gradient(160deg, #658f9c 0%, #bfd9e0 100%); background-size: 36px 36px, 36px 36px, 100% 100%; background-position: 0 0, 18px 18px, 0 0;'
+        },
+        {
+            id: 'lavender',
+            name: 'Лаванда',
+            dotBg: 'linear-gradient(135deg, #9d6ea3, #e0c5e3)',
+            style: 'background-color: #a678ab; background-image: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.3) 0%, transparent 65%), repeating-linear-gradient(-45deg, rgba(255,255,255,0.1) 0, rgba(255,255,255,0.1) 8px, transparent 8px, transparent 18px), linear-gradient(135deg, #9b6ca1 0%, #dfc2e3 100%);'
+        },
+        {
+            id: 'gold',
+            name: 'Медовый',
+            dotBg: 'linear-gradient(135deg, #d68c3a, #fce5b8)',
+            style: 'background-color: #df9b49; background-image: radial-gradient(circle at 15px 15px, rgba(255,255,255,0.28) 4px, transparent 5px), linear-gradient(125deg, #d68838 0%, #fae0ad 100%); background-size: 44px 44px, 100% 100%;'
+        },
+        {
+            id: 'terra',
+            name: 'Терракота',
+            dotBg: 'linear-gradient(135deg, #8c402b, #d66242)',
+            style: 'background-color: #9e4831; background-image: radial-gradient(circle at 85% 15%, rgba(250,215,168,0.32) 0%, transparent 55%), repeating-linear-gradient(90deg, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 14px, transparent 14px, transparent 28px), linear-gradient(135deg, #7d3623 0%, #d66242 100%);'
+        },
+        {
+            id: 'rose_silk',
+            name: 'Розовый шёлк',
+            dotBg: 'linear-gradient(135deg, #c96b7e, #f7cad2)',
+            style: 'background-color: #d47a8c; background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.34) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,240,245,0.28) 0%, transparent 50%), linear-gradient(135deg, #c46478 0%, #f5c6d0 100%);'
+        },
+        {
+            id: 'mint_wave',
+            name: 'Мятная волна',
+            dotBg: 'linear-gradient(135deg, #3b8c7c, #bce6dc)',
+            style: 'background-color: #499c8b; background-image: radial-gradient(circle at 18px 18px, rgba(255,255,255,0.22) 5px, transparent 6px), linear-gradient(145deg, #378777 0%, #b5e3d8 100%); background-size: 52px 52px, 100% 100%;'
+        },
+        {
+            id: 'indigo_stars',
+            name: 'Ночное небо',
+            dotBg: 'linear-gradient(135deg, #2b3559, #6e80bd)',
+            style: 'background-color: #344069; background-image: radial-gradient(rgba(255,255,255,0.45) 1.5px, transparent 1.5px), radial-gradient(rgba(250,215,168,0.38) 2px, transparent 2px), linear-gradient(140deg, #252e4d 0%, #6375b0 100%); background-size: 46px 46px, 70px 70px, 100% 100%; background-position: 0 0, 23px 23px, 0 0;'
+        },
+        {
+            id: 'citrus',
+            name: 'Цитрус',
+            dotBg: 'linear-gradient(135deg, #d9822b, #fae69e)',
+            style: 'background-color: #e3963e; background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.14) 0px, rgba(255,255,255,0.14) 10px, transparent 10px, transparent 20px), linear-gradient(135deg, #d47d26 0%, #f7e194 100%);'
+        },
+        {
+            id: 'berry',
+            name: 'Ежевика',
+            dotBg: 'linear-gradient(135deg, #6e2d53, #cf8ab2)',
+            style: 'background-color: #7d3660; background-image: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.24) 0%, transparent 50%), linear-gradient(135deg, #632549 0%, #c983ac 100%);'
+        },
+        {
+            id: 'linen',
+            name: 'Тёплый лён',
+            dotBg: 'linear-gradient(135deg, #9c8669, #e8dcc8)',
+            style: 'background-color: #b09a7d; background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 8px), repeating-linear-gradient(90deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 2px, transparent 2px, transparent 8px), linear-gradient(135deg, #968063 0%, #e6d8c3 100%);'
+        }
+    ];
 
     var MONTH_THEMES = {
         '01': { icon: '❄️', bg: 'linear-gradient(135deg, #e5eff2 0%, #f5e6cb 100%)', border: '#799ea8', titleColor: '#3b1b12', svg: '<svg viewBox="0 0 140 140" fill="none"><g stroke="#799ea8" stroke-width="2.4" stroke-linecap="round" opacity="0.45"><line x1="98" y1="14" x2="98" y2="70"/><line x1="70" y1="42" x2="126" y2="42"/><line x1="78" y1="22" x2="118" y2="62"/><line x1="118" y1="22" x2="78" y2="62"/><polyline points="92,20 98,26 104,20"/><polyline points="92,64 98,58 104,64"/><polyline points="76,36 82,42 76,48"/><polyline points="120,36 114,42 120,48"/></g></svg>' },
@@ -1436,20 +1978,37 @@
         '12': { icon: '🎄', bg: 'linear-gradient(135deg, #e3ebe8 0%, #fad7a8 100%)', border: '#5f726b', titleColor: '#3b1b12', svg: '<svg viewBox="0 0 140 140" fill="none"><polygon points="102,16 84,42 94,42 78,64 90,64 74,86 130,86 114,64 126,64 110,42 120,42" fill="#5f726b" opacity="0.36"/><polygon points="102,8 104,13 109,14 105,17 106,22 102,19 98,22 99,17 95,14 100,13" fill="#ebb052" opacity="0.55"/></svg>' }
     };
 
+    function getTodayIso() {
+        var now = new Date();
+        var yyyy = now.getFullYear();
+        var mm = String(now.getMonth() + 1).padStart(2, '0');
+        var dd = String(now.getDate()).padStart(2, '0');
+        return yyyy + '-' + mm + '-' + dd;
+    }
+
     function switchTab(tabName) {
         activeTab = tabName;
         document.getElementById('tabBtnSales').classList.toggle('active', tabName === 'sales');
         document.getElementById('tabBtnMonths').classList.toggle('active', tabName === 'months');
         document.getElementById('tabBtnPrep').classList.toggle('active', tabName === 'prep');
+        document.getElementById('tabBtnDaily').classList.toggle('active', tabName === 'daily');
+
         document.getElementById('panelSales').classList.toggle('active', tabName === 'sales');
         document.getElementById('panelMonths').classList.toggle('active', tabName === 'months');
         document.getElementById('panelPrep').classList.toggle('active', tabName === 'prep');
+        document.getElementById('panelDaily').classList.toggle('active', tabName === 'daily');
 
         if (tabName === 'months') {
             syncChartYearOptions();
             renderMonthsTab();
         } else if (tabName === 'prep') {
             renderPrepTab();
+        } else if (tabName === 'daily') {
+            if (editingDailyCardId === null) {
+                var dailyDateEl = document.getElementById('dailyDateInput');
+                if (dailyDateEl) dailyDateEl.value = getTodayIso();
+            }
+            renderDailyTab();
         }
     }
 
@@ -1535,6 +2094,714 @@
         }
     }
 
+    /* Логика вкладки Итоги дня */
+    function loadDailySchema() {
+        try {
+            var raw = localStorage.getItem(DAILY_SCHEMA_KEY);
+            var parsed = raw ? JSON.parse(raw) : null;
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        } catch (e) {}
+        return JSON.parse(JSON.stringify(DEFAULT_DAILY_SCHEMA));
+    }
+
+    function saveDailySchema(schema) {
+        try {
+            localStorage.setItem(DAILY_SCHEMA_KEY, JSON.stringify(schema));
+        } catch (e) {}
+    }
+
+    function isDailySchemaModified(schema) {
+        if (schema.length !== DEFAULT_DAILY_SCHEMA.length) return true;
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key !== DEFAULT_DAILY_SCHEMA[i].key || schema[i].label !== DEFAULT_DAILY_SCHEMA[i].label) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function restoreDefaultDailySchema() {
+        saveDailySchema(JSON.parse(JSON.stringify(DEFAULT_DAILY_SCHEMA)));
+        renderDailyTab();
+        showToast('Стандартные пункты восстановлены');
+    }
+
+    function loadDailyCards() {
+        try {
+            var raw = localStorage.getItem(DAILY_CARDS_KEY);
+            var parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveDailyCardsList(list) {
+        try {
+            localStorage.setItem(DAILY_CARDS_KEY, JSON.stringify(list));
+        } catch (e) {
+            showToast('Не удалось сохранить карточки дня');
+        }
+    }
+
+    function getSelectedDailyWallpaper() {
+        return localStorage.getItem(DAILY_WALLPAPER_KEY) || 'peach';
+    }
+
+    function selectDailyWallpaper(wpId) {
+        localStorage.setItem(DAILY_WALLPAPER_KEY, wpId);
+        renderWallpaperPicker();
+    }
+
+    function renderWallpaperPicker() {
+        var wpRow = document.getElementById('wallpaperPicker');
+        if (!wpRow) return;
+        var currentWp = getSelectedDailyWallpaper();
+        var wpHtml = '';
+        for (var w = 0; w < DAILY_WALLPAPERS.length; w++) {
+            var wp = DAILY_WALLPAPERS[w];
+            var activeCls = wp.id === currentWp ? ' active' : '';
+            wpHtml += '<button type="button" class="wp-dot' + activeCls + '" style="background:' + wp.dotBg + ';" title="' + wp.name + '" onclick="selectDailyWallpaper(\'' + wp.id + '\')"></button>';
+        }
+        wpRow.innerHTML = wpHtml;
+    }
+
+    function resetDailyDraft() {
+        dailyDraftValues = {};
+        var schema = loadDailySchema();
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].type === 'number') {
+                dailyDraftValues[schema[i].key] = 0;
+            }
+        }
+    }
+
+    function stepDailyValue(key, delta) {
+        var cur = parseInt(dailyDraftValues[key], 10) || 0;
+        var next = Math.max(0, cur + delta);
+        dailyDraftValues[key] = next;
+        var inp = document.getElementById('daily_inp_' + key);
+        if (inp) inp.value = next;
+    }
+
+    function setDailyNumberValue(key, valStr) {
+        var num = parseInt(valStr, 10);
+        if (isNaN(num) || num < 0) num = 0;
+        dailyDraftValues[key] = num;
+    }
+
+    function setDailyBoolValue(key, val) {
+        if (dailyDraftValues[key] === val) {
+            delete dailyDraftValues[key];
+        } else {
+            dailyDraftValues[key] = val;
+        }
+        renderDailyFormGrid();
+    }
+
+    function addCustomDailyItem(e) {
+        e.preventDefault();
+        var inp = document.getElementById('dailyNewItemInput');
+        var label = inp.value.trim();
+        if (!label) return;
+
+        var schema = loadDailySchema();
+        var newKey = 'custom_' + Date.now();
+        var afonyaIdx = -1;
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key === 'afonya') {
+                afonyaIdx = i;
+                break;
+            }
+        }
+        var newItem = { key: newKey, label: label, icon: '📌', type: 'number' };
+        if (afonyaIdx >= 0) {
+            schema.splice(afonyaIdx, 0, newItem);
+        } else {
+            schema.push(newItem);
+        }
+        saveDailySchema(schema);
+        dailyDraftValues[newKey] = 0;
+        inp.value = '';
+        renderDailyFormGrid();
+        showToast('Пункт «' + label + '» добавлен');
+    }
+
+    function deleteDailySchemaItem(key) {
+        var schema = loadDailySchema().filter(function(item) {
+            return item.key !== key;
+        });
+        saveDailySchema(schema);
+        delete dailyDraftValues[key];
+        renderDailyFormGrid();
+        showToast('Пункт удалён из формы');
+    }
+
+    function openEditDailyLabelModal(key) {
+        var schema = loadDailySchema();
+        var target = null;
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key === key) {
+                target = schema[i];
+                break;
+            }
+        }
+        if (!target) return;
+        pendingEditDailyLabelKey = key;
+        var inp = document.getElementById('editDailyLabelInput');
+        inp.value = target.label;
+        document.getElementById('editDailyLabelModal').classList.add('open');
+        setTimeout(function() {
+            inp.focus();
+            inp.select();
+        }, 50);
+    }
+
+    function closeEditDailyLabelModal() {
+        pendingEditDailyLabelKey = null;
+        document.getElementById('editDailyLabelModal').classList.remove('open');
+    }
+
+    function saveEditDailyLabel(e) {
+        e.preventDefault();
+        if (!pendingEditDailyLabelKey) return;
+        var inp = document.getElementById('editDailyLabelInput');
+        var newLabel = inp.value.trim();
+        if (!newLabel) return;
+
+        var schema = loadDailySchema();
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key === pendingEditDailyLabelKey) {
+                schema[i].label = newLabel;
+                break;
+            }
+        }
+        saveDailySchema(schema);
+        closeEditDailyLabelModal();
+        renderDailyFormGrid();
+        renderDailyCardsList();
+        showToast('Название пункта обновлено');
+    }
+
+    var draggedDailyKey = null;
+
+    function handleDailyDragStart(e, key) {
+        draggedDailyKey = key;
+        if (e.dataTransfer) {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', key);
+        }
+        if (e.currentTarget) {
+            e.currentTarget.classList.add('dragging');
+        }
+    }
+
+    function handleDailyDragOver(e) {
+        e.preventDefault();
+        if (e.dataTransfer) {
+            e.dataTransfer.dropEffect = 'move';
+        }
+        if (e.currentTarget && !e.currentTarget.classList.contains('dragging')) {
+            e.currentTarget.classList.add('drag-over');
+        }
+    }
+
+    function handleDailyDragLeave(e) {
+        if (e.currentTarget) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+    }
+
+    function handleDailyDragEnd(e) {
+        draggedDailyKey = null;
+        var allFields = document.querySelectorAll('.daily-form-field');
+        for (var i = 0; i < allFields.length; i++) {
+            allFields[i].classList.remove('dragging', 'drag-over');
+        }
+    }
+
+    function handleDailyDrop(e, targetKey) {
+        e.preventDefault();
+        if (e.currentTarget) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+        if (!draggedDailyKey || draggedDailyKey === targetKey) return;
+
+        var schema = loadDailySchema();
+        var fromIdx = -1;
+        var toIdx = -1;
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key === draggedDailyKey) fromIdx = i;
+            if (schema[i].key === targetKey) toIdx = i;
+        }
+        if (fromIdx < 0 || toIdx < 0) return;
+
+        var movedItem = schema.splice(fromIdx, 1)[0];
+        schema.splice(toIdx, 0, movedItem);
+        saveDailySchema(schema);
+        draggedDailyKey = null;
+        renderDailyFormGrid();
+    }
+
+    function moveDailySchemaItem(key, direction) {
+        var schema = loadDailySchema();
+        var idx = -1;
+        for (var i = 0; i < schema.length; i++) {
+            if (schema[i].key === key) {
+                idx = i;
+                break;
+            }
+        }
+        if (idx < 0) return;
+
+        var targetIdx = idx + direction;
+        while (targetIdx >= 0 && targetIdx < schema.length && schema[targetIdx].type === 'group') {
+            targetIdx += direction;
+        }
+        if (targetIdx < 0 || targetIdx >= schema.length) return;
+
+        var temp = schema[idx];
+        schema[idx] = schema[targetIdx];
+        schema[targetIdx] = temp;
+
+        saveDailySchema(schema);
+        renderDailyFormGrid();
+    }
+
+    function renderDailyFormGrid() {
+        var formGrid = document.getElementById('dailyFormGrid');
+        if (!formGrid) return;
+        var schema = loadDailySchema();
+
+        var restoreWrap = document.getElementById('dailyRestoreSchemaWrap');
+        if (restoreWrap) {
+            restoreWrap.style.display = isDailySchemaModified(schema) ? 'block' : 'none';
+        }
+
+        var html = '';
+        for (var i = 0; i < schema.length; i++) {
+            var item = schema[i];
+            if (item.type === 'group') {
+                var groupHasSub = false;
+                for (var s = i + 1; s < schema.length; s++) {
+                    if (schema[s].type === 'group') break;
+                    if (schema[s].sub) {
+                        groupHasSub = true;
+                        break;
+                    }
+                }
+                if (groupHasSub) {
+                    html += '<div class="daily-form-sub-header">' + (item.icon || '📤') + ' ' + escapeHtml(item.label) + '</div>';
+                }
+            } else if (item.type === 'bool') {
+                var isYes = dailyDraftValues[item.key] === 'yes';
+                var isNo = dailyDraftValues[item.key] === 'no';
+                html += '<div class="daily-form-field" draggable="true" ondragstart="handleDailyDragStart(event, \'' + item.key + '\')" ondragover="handleDailyDragOver(event)" ondragleave="handleDailyDragLeave(event)" ondrop="handleDailyDrop(event, \'' + item.key + '\')" ondragend="handleDailyDragEnd(event)">' +
+                    '<div class="daily-reorder-box">' +
+                        '<span class="daily-drag-handle" title="Перетащить">⋮⋮</span>' +
+                        '<div class="daily-move-arrows">' +
+                            '<button type="button" class="daily-arrow-btn" onclick="moveDailySchemaItem(\'' + item.key + '\', -1)" title="Вверх">▲</button>' +
+                            '<button type="button" class="daily-arrow-btn" onclick="moveDailySchemaItem(\'' + item.key + '\', 1)" title="Вниз">▼</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="daily-form-label-wrap">' +
+                        '<span class="daily-form-label" onclick="openEditDailyLabelModal(\'' + item.key + '\')" title="Переименовать пункт">' +
+                            (item.icon ? item.icon + ' ' : '') + escapeHtml(item.label) +
+                            '<span class="daily-edit-hint">✏️</span>' +
+                        '</span>' +
+                    '</div>' +
+                    '<div class="daily-bool-group">' +
+                        '<button type="button" class="daily-bool-btn' + (isYes ? ' active-yes' : '') + '" onclick="setDailyBoolValue(\'' + item.key + '\', \'yes\')">Да</button>' +
+                        '<button type="button" class="daily-bool-btn' + (isNo ? ' active-no' : '') + '" onclick="setDailyBoolValue(\'' + item.key + '\', \'no\')">Нет</button>' +
+                        '<button type="button" class="daily-item-del-btn" onclick="deleteDailySchemaItem(\'' + item.key + '\')" title="Удалить пункт">✕</button>' +
+                    '</div>' +
+                '</div>';
+            } else {
+                var val = parseInt(dailyDraftValues[item.key], 10) || 0;
+                var subCls = item.sub ? ' is-sub' : '';
+                var prefix = item.sub ? '• ' : (item.icon ? item.icon + ' ' : '');
+                html += '<div class="daily-form-field' + subCls + '" draggable="true" ondragstart="handleDailyDragStart(event, \'' + item.key + '\')" ondragover="handleDailyDragOver(event)" ondragleave="handleDailyDragLeave(event)" ondrop="handleDailyDrop(event, \'' + item.key + '\')" ondragend="handleDailyDragEnd(event)">' +
+                    '<div class="daily-reorder-box">' +
+                        '<span class="daily-drag-handle" title="Перетащить">⋮⋮</span>' +
+                        '<div class="daily-move-arrows">' +
+                            '<button type="button" class="daily-arrow-btn" onclick="moveDailySchemaItem(\'' + item.key + '\', -1)" title="Вверх">▲</button>' +
+                            '<button type="button" class="daily-arrow-btn" onclick="moveDailySchemaItem(\'' + item.key + '\', 1)" title="Вниз">▼</button>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="daily-form-label-wrap">' +
+                        '<span class="daily-form-label" onclick="openEditDailyLabelModal(\'' + item.key + '\')" title="Переименовать пункт">' +
+                            prefix + escapeHtml(item.label) +
+                            '<span class="daily-edit-hint">✏️</span>' +
+                        '</span>' +
+                    '</div>' +
+                    '<div class="daily-step-box">' +
+                        '<button type="button" class="daily-step-btn" onclick="stepDailyValue(\'' + item.key + '\', -1)">−</button>' +
+                        '<input type="number" id="daily_inp_' + item.key + '" class="daily-step-input" min="0" inputmode="numeric" value="' + val + '" onchange="setDailyNumberValue(\'' + item.key + '\', this.value)">' +
+                        '<button type="button" class="daily-step-btn" onclick="stepDailyValue(\'' + item.key + '\', 1)">+</button>' +
+                        '<button type="button" class="daily-item-del-btn" onclick="deleteDailySchemaItem(\'' + item.key + '\')" title="Удалить пункт">✕</button>' +
+                    '</div>' +
+                '</div>';
+            }
+        }
+        formGrid.innerHTML = html;
+    }
+
+    function saveDailyCard() {
+        var dateEl = document.getElementById('dailyDateInput');
+        var dateVal = (dateEl && dateEl.value) ? dateEl.value : getTodayIso();
+        var wpId = getSelectedDailyWallpaper();
+        var schema = loadDailySchema();
+
+        var hasAnyData = false;
+        var cleanValues = {};
+        for (var i = 0; i < schema.length; i++) {
+            var item = schema[i];
+            if (item.type === 'number') {
+                var num = parseInt(dailyDraftValues[item.key], 10) || 0;
+                if (num > 0) {
+                    cleanValues[item.key] = num;
+                    hasAnyData = true;
+                }
+            } else if (item.type === 'bool') {
+                if (dailyDraftValues[item.key] === 'yes' || dailyDraftValues[item.key] === 'no') {
+                    cleanValues[item.key] = dailyDraftValues[item.key];
+                    hasAnyData = true;
+                }
+            }
+        }
+
+        if (!hasAnyData) {
+            showToast('Заполните хотя бы один пункт перед сохранением');
+            return;
+        }
+
+        var cards = loadDailyCards();
+        if (editingDailyCardId !== null) {
+            for (var c = 0; c < cards.length; c++) {
+                if (cards[c].id === editingDailyCardId) {
+                    cards[c].date = dateVal;
+                    cards[c].wallpaper = wpId;
+                    cards[c].values = cleanValues;
+                    cards[c].schemaSnapshot = JSON.parse(JSON.stringify(schema));
+                    break;
+                }
+            }
+            editingDailyCardId = null;
+            showToast('Карточка дня обновлена');
+        } else {
+            cards.unshift({
+                id: Date.now(),
+                date: dateVal,
+                wallpaper: wpId,
+                values: cleanValues,
+                schemaSnapshot: JSON.parse(JSON.stringify(schema))
+            });
+            showToast('Карточка за день сохранена!');
+        }
+
+        saveDailyCardsList(cards);
+        resetDailyDraft();
+        if (dateEl) dateEl.value = getTodayIso();
+        updateDailyFormHeaderState();
+        renderDailyFormGrid();
+        renderDailyCardsList();
+    }
+
+    function editDailyCard(id) {
+        var cards = loadDailyCards();
+        var target = null;
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i].id === id) {
+                target = cards[i];
+                break;
+            }
+        }
+        if (!target) return;
+
+        editingDailyCardId = id;
+        var dateEl = document.getElementById('dailyDateInput');
+        if (dateEl) dateEl.value = target.date;
+        if (target.wallpaper) {
+            localStorage.setItem(DAILY_WALLPAPER_KEY, target.wallpaper);
+        }
+
+        resetDailyDraft();
+        var vals = target.values || {};
+        for (var k in vals) {
+            if (Object.prototype.hasOwnProperty.call(vals, k)) {
+                dailyDraftValues[k] = vals[k];
+            }
+        }
+
+        updateDailyFormHeaderState();
+        renderWallpaperPicker();
+        renderDailyFormGrid();
+
+        var formCard = document.getElementById('dailyFormCardTitle');
+        if (formCard) formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('Редактирование карточки за ' + formatDateRu(target.date));
+    }
+
+    function cancelDailyEdit() {
+        editingDailyCardId = null;
+        resetDailyDraft();
+        var dateEl = document.getElementById('dailyDateInput');
+        if (dateEl) dateEl.value = getTodayIso();
+        updateDailyFormHeaderState();
+        renderDailyFormGrid();
+    }
+
+    function updateDailyFormHeaderState() {
+        var titleEl = document.getElementById('dailyFormCardTitle');
+        var saveBtn = document.getElementById('btnSaveDailyCard');
+        var cancelBtn = document.getElementById('btnCancelDailyEdit');
+        if (!titleEl || !saveBtn || !cancelBtn) return;
+
+        if (editingDailyCardId !== null) {
+            titleEl.innerHTML = '<span class="dot-green"></span> Редактирование карточки';
+            saveBtn.textContent = '💾 Сохранить изменения';
+            cancelBtn.style.display = 'inline-block';
+        } else {
+            titleEl.innerHTML = '<span class="dot-green"></span> Заполнить итоги дня';
+            saveBtn.textContent = '💾 Сохранить отчёт за день';
+            cancelBtn.style.display = 'none';
+        }
+    }
+
+    function openDeleteDailyCardModal(id) {
+        var cards = loadDailyCards();
+        var target = null;
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i].id === id) {
+                target = cards[i];
+                break;
+            }
+        }
+        if (!target) return;
+        pendingDeleteDailyCardId = id;
+        document.getElementById('deleteDailyCardModalText').textContent =
+            'Удалить карточку «Итоги дня за ' + formatDateRu(target.date) + '»?';
+        document.getElementById('deleteDailyCardModal').classList.add('open');
+    }
+
+    function closeDeleteDailyCardModal() {
+        pendingDeleteDailyCardId = null;
+        document.getElementById('deleteDailyCardModal').classList.remove('open');
+    }
+
+    function confirmDeleteDailyCard() {
+        if (pendingDeleteDailyCardId === null) return;
+        var cards = loadDailyCards().filter(function(c) {
+            return c.id !== pendingDeleteDailyCardId;
+        });
+        saveDailyCardsList(cards);
+        if (editingDailyCardId === pendingDeleteDailyCardId) {
+            cancelDailyEdit();
+        }
+        closeDeleteDailyCardModal();
+        renderDailyCardsList();
+        showToast('Карточка дня удалена');
+    }
+
+    function getCardSchemaForRender(card) {
+        var currentSchema = loadDailySchema();
+        var currentMap = {};
+        for (var j = 0; j < currentSchema.length; j++) {
+            currentMap[currentSchema[j].key] = currentSchema[j];
+        }
+
+        if (Array.isArray(card.schemaSnapshot) && card.schemaSnapshot.length > 0) {
+            var merged = [];
+            var seenKeys = {};
+            for (var s = 0; s < card.schemaSnapshot.length; s++) {
+                var snapItem = card.schemaSnapshot[s];
+                seenKeys[snapItem.key] = true;
+                if (currentMap[snapItem.key]) {
+                    merged.push(currentMap[snapItem.key]);
+                } else {
+                    merged.push(snapItem);
+                }
+            }
+            for (var c = 0; c < currentSchema.length; c++) {
+                if (!seenKeys[currentSchema[c].key]) {
+                    merged.push(currentSchema[c]);
+                }
+            }
+            return merged;
+        }
+        return currentSchema;
+    }
+
+    function renderDailyCardsList() {
+        var container = document.getElementById('dailyCardsListContainer');
+        if (!container) return;
+        var cards = loadDailyCards();
+
+        if (cards.length === 0) {
+            container.innerHTML = '<div class="card"><div class="empty-state">Сохранённых карточек за день пока нет. Заполните форму выше и нажмите «Сохранить».</div></div>';
+            return;
+        }
+
+        cards.sort(function(a, b) {
+            if (b.date !== a.date) return b.date.localeCompare(a.date);
+            return b.id - a.id;
+        });
+
+        var html = '';
+        for (var c = 0; c < cards.length; c++) {
+            var card = cards[c];
+            var wpObj = DAILY_WALLPAPERS[0];
+            for (var w = 0; w < DAILY_WALLPAPERS.length; w++) {
+                if (DAILY_WALLPAPERS[w].id === card.wallpaper) {
+                    wpObj = DAILY_WALLPAPERS[w];
+                    break;
+                }
+            }
+
+            var rec = card.values || {};
+            var cardSchema = getCardSchemaForRender(card);
+
+            var linesHtml = '';
+            for (var i = 0; i < cardSchema.length; i++) {
+                var item = cardSchema[i];
+                if (item.type === 'group') {
+                    var hasAnyInGroup = false;
+                    for (var p = i + 1; p < cardSchema.length; p++) {
+                        if (cardSchema[p].type === 'group') break;
+                        if (cardSchema[p].sub && (parseInt(rec[cardSchema[p].key], 10) || 0) > 0) {
+                            hasAnyInGroup = true;
+                            break;
+                        }
+                    }
+                    if (hasAnyInGroup) {
+                        linesHtml += '<div class="daily-report-group">' + (item.icon || '📤') + ' ' + escapeHtml(item.label) + '</div>';
+                    }
+                } else if (item.type === 'bool') {
+                    if (rec[item.key] !== undefined) {
+                        var isYes = rec[item.key] === 'yes';
+                        var boolBadge = isYes
+                            ? '<span class="daily-line-bool yes">да</span>'
+                            : '<span class="daily-line-bool no">нет</span>';
+                        linesHtml += '<div class="daily-report-line">' +
+                            '<span class="daily-line-name">' + (item.icon ? item.icon + ' ' : '') + escapeHtml(item.label) + '</span>' +
+                            '<span class="daily-line-dots"></span>' +
+                            boolBadge +
+                        '</div>';
+                    }
+                } else {
+                    var num = parseInt(rec[item.key], 10) || 0;
+                    if (num > 0) {
+                        var subCls = item.sub ? ' is-sub' : '';
+                        var namePrefix = item.sub ? '• ' : (item.icon ? item.icon + ' ' : '');
+                        linesHtml += '<div class="daily-report-line' + subCls + '">' +
+                            '<span class="daily-line-name">' + namePrefix + escapeHtml(item.label) + '</span>' +
+                            '<span class="daily-line-dots"></span>' +
+                            '<span class="daily-line-val-pill">' + num + '</span>' +
+                        '</div>';
+                    }
+                }
+            }
+
+            html += '<div class="daily-overlay-wrapper" style="' + wpObj.style + '">' +
+                '<div class="daily-overlay-sheet">' +
+                    '<div class="daily-sheet-header">' +
+                        '<h3 class="daily-sheet-title">Итоги дня за ' + formatDateRu(card.date) + '</h3>' +
+                    '</div>' +
+                    '<div class="daily-report-lines">' + linesHtml + '</div>' +
+                    '<div class="daily-card-actions-row">' +
+                        '<button type="button" class="btn-daily-card-act" onclick="copyDailyCardText(' + card.id + ')">📋 Копировать</button>' +
+                        '<button type="button" class="btn-daily-card-act" onclick="editDailyCard(' + card.id + ')">✏️ Изменить</button>' +
+                        '<button type="button" class="btn-daily-card-act danger" onclick="openDeleteDailyCardModal(' + card.id + ')">✕ Удалить</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }
+
+        container.innerHTML = html;
+    }
+
+    function copyDailyCardText(id) {
+        var cards = loadDailyCards();
+        var card = null;
+        for (var i = 0; i < cards.length; i++) {
+            if (cards[i].id === id) {
+                card = cards[i];
+                break;
+            }
+        }
+        if (!card) return;
+
+        var rec = card.values || {};
+        var cardSchema = getCardSchemaForRender(card);
+
+        var lines = [];
+        lines.push('Итоги дня за ' + formatDateRu(card.date));
+
+        for (var idx = 0; idx < cardSchema.length; idx++) {
+            var item = cardSchema[idx];
+            if (item.type === 'group') {
+                var hasAnyInGroup = false;
+                for (var p = idx + 1; p < cardSchema.length; p++) {
+                    if (cardSchema[p].type === 'group') break;
+                    if (cardSchema[p].sub && (parseInt(rec[cardSchema[p].key], 10) || 0) > 0) {
+                        hasAnyInGroup = true;
+                        break;
+                    }
+                }
+                if (hasAnyInGroup) lines.push(item.label);
+            } else if (item.type === 'bool') {
+                if (rec[item.key] !== undefined) {
+                    var boolStr = rec[item.key] === 'yes' ? 'да' : 'нет';
+                    lines.push(item.label + ': ' + boolStr);
+                }
+            } else {
+                var num = parseInt(rec[item.key], 10) || 0;
+                if (num > 0) {
+                    if (item.sub) {
+                        lines.push('  • ' + item.label + ': ' + num);
+                    } else {
+                        lines.push(item.label + ': ' + num);
+                    }
+                }
+            }
+        }
+
+        var textToCopy = lines.join('\n');
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                showToast('Итоги дня скопированы');
+            }).catch(function() {
+                fallbackCopyText(textToCopy);
+            });
+        } else {
+            fallbackCopyText(textToCopy);
+        }
+    }
+
+    function fallbackCopyText(text) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showToast('Итоги дня скопированы');
+        } catch (e) {
+            showToast('Не удалось скопировать текст');
+        }
+        document.body.removeChild(ta);
+    }
+
+    function renderDailyTab() {
+        updateDailyFormHeaderState();
+        renderWallpaperPicker();
+        renderDailyFormGrid();
+        renderDailyCardsList();
+    }
+
+    /* Логика вкладки Подготовка */
     function getCompactPlatformIcon(platKey) {
         if (platKey === 'wb') {
             return '<svg width="20" height="20" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#7c118f"/><text x="20" y="25.5" text-anchor="middle" fill="#ffffff" font-size="15.5" font-weight="900" font-family="sans-serif" letter-spacing="-0.5">WB</text></svg>';
@@ -2288,7 +3555,9 @@
     function exportJSON() {
         var backupPayload = {
             sales: loadSales(),
-            prep_items: loadPrepItems()
+            prep_items: loadPrepItems(),
+            daily_cards: loadDailyCards(),
+            daily_schema: loadDailySchema()
         };
         var blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: 'application/json' });
         var url = URL.createObjectURL(blob);
@@ -2341,17 +3610,24 @@
                 }
                 saveSales(cleaned);
 
-                if (parsed && !Array.isArray(parsed) && Array.isArray(parsed.prep_items)) {
-                    savePrepItems(parsed.prep_items);
+                if (parsed && !Array.isArray(parsed)) {
+                    if (Array.isArray(parsed.prep_items)) {
+                        savePrepItems(parsed.prep_items);
+                    }
+                    if (Array.isArray(parsed.daily_cards)) {
+                        saveDailyCardsList(parsed.daily_cards);
+                    }
+                    if (Array.isArray(parsed.daily_schema) && parsed.daily_schema.length > 0) {
+                        saveDailySchema(parsed.daily_schema);
+                    }
                 }
 
                 if (cleaned.length > 0 && cleaned[0].sale_date && cleaned[0].sale_date.length >= 7) {
                     document.getElementById('monthPicker').value = cleaned[0].sale_date.slice(0, 7);
                 }
                 renderAll();
-                if (activeTab === 'prep') {
-                    renderPrepTab();
-                }
+                if (activeTab === 'prep') renderPrepTab();
+                if (activeTab === 'daily') renderDailyTab();
                 showToast('Загружено записей: ' + cleaned.length);
             } catch (err) {
                 showToast('Ошибка при разборе JSON-файла');
@@ -2367,18 +3643,19 @@
     });
 
     (function init() {
-        var now = new Date();
-        var yyyy = now.getFullYear();
-        var mm = String(now.getMonth() + 1).padStart(2, '0');
-        var dd = String(now.getDate()).padStart(2, '0');
-        var today = yyyy + '-' + mm + '-' + dd;
+        var today = getTodayIso();
+        var yyyyMm = today.slice(0, 7);
 
         document.getElementById('saleDate').value = today;
-        document.getElementById('monthPicker').value = yyyy + '-' + mm;
+        document.getElementById('monthPicker').value = yyyyMm;
+        document.getElementById('dailyDateInput').value = today;
+
+        resetDailyDraft();
         syncInstallBtnVisibility();
         syncChartYearOptions();
         renderAll();
         renderPrepTab();
+        renderDailyTab();
     })();
 </script>
 </body>
