@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uchet-prodazh-pwa-v10';
+const CACHE_NAME = 'uchet-prodazh-pwa-v11';
 const ASSETS = [
   './',
   './index.html',
